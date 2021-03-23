@@ -24,7 +24,7 @@ module Decidim
                     icon_name: "pie-chart",
                     position: 7.2,
                     active: :inclusive,
-                    if: allowed_to?(:update, :organization, organization: current_organization) and Rails.application.secrets.dig(:matomo, :enabled)
+                    if: allowed_to?(:update, :organization, organization: current_organization) and Rails.application.secrets.dig(:metabase, :enabled)
         end
       end
     end

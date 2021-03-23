@@ -1,33 +1,34 @@
-# Decidim::Analytics
+# Decidim::Metabase
 
-This module does two things:
-- it enables tracking through Matomo
-- it adds a tab in the admin panel showing one Matomo dashboard (or more) of your choice
+This module adds a tab in the admin panel showing one Metabase dashboard of your choice
 
 ![Preview of the module](screenshot.png)
+
+## Foreword
+This module is a fork of the `decidim-module-analytics` made by Digidem Lab [here](https://github.com/digidemlab/decidim-module-analytics), so I strongly encourage you to take a look at it, as it does the same work but with a Metabase iframe instead of a Matomo one.
 ## Usage
 
-You will of course need to have Matomo running on a server or the cloud version (untested).
+You will of course need to have Metabase instance running on a server or the cloud version (untested).
 
 The module doesn't have any settings panel as I don't want to write anything in the database. It will pick the data it needs from Rails secrets:
 
-```
-matomo:
-    enabled: true # Enables tracking and displays the admin tab
-    server_address: https://matomo.example.org # The URL of your Matomo instance
-    site_id: 1 # The Matomo site ID of the Decidim platform
-    token_auth: 6a710da82ecb933866507c14bdb99351 # A Matomo authentication token (read-only).
+```yaml
+metabase:
+  enabled: true
+  site_url: https://metabase.example.org
+  secret_key: your_secret_key
+  dashboard_id: 42
 ```
 
-Follow [these instructions](https://matomo.org/docs/embed-matomo-reports/#embed-piwik-widgets-on-a-password-protected-or-private-page) to get `token_auth` from Matomo.
+To complete with needed values, you simply need to visit your dashboard page in your Metabase instance, click on `Share` then `Integrate this dashboard in your application`. You'll fall in the following page after selecting `Ruby` as language wanted :
 
-The dashboard that will be shown on page load is using the default layout you set for all new dashboard. You can create several other dashboards for the user and you will be able to switch between them from Decidim.
+![Preview of the integration](screenshot_integrate.png)
 ## Installation
 
 1. Add this line to your application's Gemfile:
 
 ```ruby
-gem "decidim-analytics", git: "https://github.com/digidemlab/decidim-module-analytics"
+gem "decidim-metabase", git: "https://github.com/OpenSourcePolitics/decidim-module-metabase"
 ```
 
 And then execute:
@@ -36,26 +37,21 @@ And then execute:
 bundle
 ```
 
-2. To enable tracking, you will need to add the following line in the file `app/views/layouts/decidim/_head_extra.html.erb`:
-```
-<%= render partial: "layouts/decidim/matomo" %>
-```
-You can use this module without the provided tracking snippet and write your own, just skip the above step.
+2. Set the above secrets in your `config/secrets.yml`. I recommend using environment variables so the secrets should look something like that:
 
-3. Don't forget to set the above secrets in your `config/secrets.yml`. I recommend using environment variables so the secrets should look something like that:
-
-```
-matomo:
-    enabled: <%= !ENV["MATOMO_SITE_ID"].blank? %>
-    server_address: <%= ENV["MATOMO_SERVER_ADDRESS"] %>
-    site_id: <%= ENV["MATOMO_SITE_ID"] %>
-    token_auth: <%= ENV["MATOMO_TOKEN_AUTH"] %>
+```yaml
+metabase:
+  enabled: <%= !ENV["METABASE_SITE_URL"].blank? %>
+  site_url: <%= ENV["METABASE_SITE_URL"] %>
+  secret_key: <%= ENV["METABASE_SECRET_KEY"] %>
+  dashboard_id: <%= ENV["METABASE_DASHBOARD_ID"] %>
 ```
 
-At Digidem Lab, we actually set the site ID dynamically when deploying through Ansible. Don't hesitate to [have a look](https://github.com/digidemlab/decidim-ansible/blob/master/roles/matomo/tasks/main.yml)!
+As descripted in [forewords](##Foreword), this module is heavily inspired by the [decidim-module-analytics](https://github.com/digidemlab/decidim-module-analytics) in which Digidem Lab recommend to set these variables dynamically through [this Ansible playbook](https://github.com/digidemlab/decidim-ansible/blob/master/roles/matomo/tasks/main.yml)
+
 ## Contributing
 
-Create an issue or a PR if you want to suggest an improvement. Keep in mind I'd like to keep this module lightweight and simple to maintain.
+Create an issue or a PR if you want to suggest an improvement.
 
 ## License
 
