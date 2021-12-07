@@ -12,8 +12,8 @@ require_relative "#{base_path}lib/decidim/metabase/version"
 gem "decidim", git: "https://github.com/decidim/decidim", branch: Decidim::Metabase.decidim_branch
 gem "decidim-metabase", path: "."
 
-gem "puma", ">= 4.3"
 gem "bootsnap", "~> 1.4"
+gem "puma", ">= 4.3"
 
 group :development, :test do
   gem "byebug", "~> 11.0", platform: :mri
@@ -25,6 +25,7 @@ group :development do
   gem "faker", "~> 2.14"
   gem "letter_opener_web", "~> 1.3"
   gem "listen", "~> 3.1"
+  gem "rubocop-faker"
   gem "spring", "~> 2.0"
   gem "spring-watcher-listen", "~> 2.0"
   gem "web-console", "~> 4.0"

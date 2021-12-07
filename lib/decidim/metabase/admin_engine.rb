@@ -32,7 +32,6 @@ module Decidim
                         "/admin/metabase",
                         icon_name: "dashboard",
                         position: 11
-
         end
       end
 
