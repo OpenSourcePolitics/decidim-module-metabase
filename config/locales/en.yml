@@ -1,0 +1,6 @@
+---
+en:
+  decidim:
+    components:
+      metabase:
+        name: Metabase
