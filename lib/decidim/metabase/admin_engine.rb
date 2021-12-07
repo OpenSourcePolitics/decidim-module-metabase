@@ -16,7 +16,7 @@ module Decidim
         #     resources :exports, only: [:create]
         #   end
         # end
-        # root to: "metabase#index"
+        root to: "metabase#index"
       end
 
       initializer "Metabase.admin_mount_routes" do
@@ -29,7 +29,7 @@ module Decidim
         Decidim.menu :admin_menu do |menu|
           menu.add_item :metabase,
                         t("decidim.admin.metabase.menu.title"),
-                        "/admin/metabase",
+                        decidim_metabase.root_path,
                         icon_name: "dashboard",
                         position: 11
         end
