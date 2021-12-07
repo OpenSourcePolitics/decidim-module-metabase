@@ -1,6 +1,10 @@
 ---
 en:
   decidim:
+    admin:
+      metabase:
+        menu:
+          title: Metabase
     components:
       metabase:
         name: Metabase

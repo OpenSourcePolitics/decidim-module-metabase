@@ -19,6 +19,23 @@ module Decidim
         # root to: "metabase#index"
       end
 
+      initializer "Metabase.admin_mount_routes" do
+        Decidim::Core::Engine.routes do
+          mount Decidim::Metabase::AdminEngine, at: "/admin/metabase", as: "decidim_metabase"
+        end
+      end
+
+      initializer "Metabase.admin_menu_add_item" do
+        Decidim.menu :admin_menu do |menu|
+          menu.add_item :metabase,
+                        t("decidim.admin.metabase.menu.title"),
+                        "/admin/metabase",
+                        icon_name: "dashboard",
+                        position: 11
+
+        end
+      end
+
       def load_seed
         nil
       end
