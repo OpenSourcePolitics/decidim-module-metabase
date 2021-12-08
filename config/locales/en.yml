@@ -5,6 +5,7 @@ en:
       metabase:
         menu:
           title: Metabase
+        title: Metabase#Index
     components:
       metabase:
         name: Metabase

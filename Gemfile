@@ -13,6 +13,7 @@ gem "decidim", git: "https://github.com/decidim/decidim", branch: Decidim::Metab
 gem "decidim-metabase", path: "."
 
 gem "bootsnap", "~> 1.4"
+gem "jwt"
 gem "puma", ">= 4.3"
 
 group :development, :test do
