@@ -57,7 +57,7 @@ jobs:
       - run: RAILS_ENV=test bundle exec rails assets:precompile
         name: Precompile assets
         working-directory: ./spec/decidim_dummy_app/
-      - run: bundle exec rspec
+      - run: SIMPLECOV=1 CODECOV=1 RUBYOPT=W0" bundle exec rspec
         name: RSpec
       - uses: codecov/codecov-action@v1
       - uses: actions/upload-artifact@v2
