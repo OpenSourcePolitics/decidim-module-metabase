@@ -5,5 +5,5 @@ en:
       metabase:
         menu:
           title: Metabase
-        title: Metabase#Index
+        title: Metabase dashboards
         not_found: No dashboard found

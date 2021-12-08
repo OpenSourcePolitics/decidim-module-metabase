@@ -46,7 +46,8 @@ describe "Admin manages Metabase", type: :system do
 
       it "renders the index view" do
         within ".card#metabase" do
-          expect(page).to have_selector("iframe")
+          expect(page).to have_content("Metabase dashboards")
+          expect(page).to have_selector("iframe[data-dashboard='0']")
         end
       end
 
