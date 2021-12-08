@@ -50,11 +50,25 @@ describe "Admin manages Metabase", type: :system do
         end
       end
 
+      context "when there is multiple dashboards" do
+        let(:metabase_dashboard_ids) { [1, 2, 3] }
+
+        it "renders the index view" do
+          within ".card#metabase" do
+            expect(page).to have_selector("iframe[data-dashboard='0']")
+            expect(page).to have_selector("iframe[data-dashboard='1']")
+            expect(page).to have_selector("iframe[data-dashboard='2']")
+          end
+        end
+      end
+
       context "when there is no dashboards" do
         let(:metabase_dashboard_ids) { [] }
 
         it "display not found message" do
-          expect(page).to have_content("No dashboard found")
+          within ".card#metabase" do
+            expect(page).to have_content("No dashboard found")
+          end
         end
       end
     end
