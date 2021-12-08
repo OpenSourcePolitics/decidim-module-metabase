@@ -6,6 +6,4 @@ en:
         menu:
           title: Metabase
         title: Metabase#Index
-    components:
-      metabase:
-        name: Metabase
+        not_found: No dashboard found

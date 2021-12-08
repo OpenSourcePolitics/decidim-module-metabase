@@ -5,11 +5,15 @@
     </h2>
   </div>
   <div class="card-section">
-    <% urls.each do |url| %>
-      <iframe src="<%= url %>"
-              width="100%"
-              height="4200px">
-      </iframe>
+    <% if urls.blank? %>
+      <%= t("decidim.admin.metabase.not_found") %>
+    <% else %>
+      <% urls.each do |url| %>
+        <iframe src="<%= url %>"
+                width="100%"
+                height="4200px">
+        </iframe>
+      <% end %>
     <% end %>
   </div>
 </div>
