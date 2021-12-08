@@ -9,6 +9,14 @@ module Decidim
         def permission_class_chain
           [::Decidim::Metabase::Admin::Permissions] + super
         end
+
+        def user_not_authorized_path
+          decidim.root_path
+        end
+
+        def user_has_no_permission_path
+          decidim.root_path
+        end
       end
     end
   end

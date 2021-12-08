@@ -27,8 +27,9 @@ describe "Admin manages Metabase", type: :system do
       end
 
       it "renders the index view" do
-        expect(page).to have_selector("#metabase_container")
-        expect(page).to have_content("Metabase#Index")
+        within ".card#metabase" do
+          expect(page).to have_content("Metabase#Index")
+        end
       end
     end
   end
@@ -56,6 +57,7 @@ describe "Admin manages Metabase", type: :system do
 
       it "is redirected" do
         expect(page).not_to have_content("Metabase#Index")
+        expect(page).to have_content("You are not authorized to perform this action")
       end
     end
   end
