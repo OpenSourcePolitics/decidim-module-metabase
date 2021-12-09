@@ -3,7 +3,7 @@
 module Decidim
   module Metabase
     module Admin
-      class MetabaseController < ApplicationController
+      class MetabaseController < Decidim::Metabase::Admin::ApplicationController
         before_action :authorized?
         helper_method :urls
 

@@ -17,10 +17,6 @@ module Decidim
         def user_has_no_permission_path
           decidim.root_path
         end
-
-        def permission_scope
-          :admin
-        end
       end
     end
   end
