@@ -19,6 +19,41 @@ module Decidim
             expect(controller.send(:urls)).to eq(urls)
           end
         end
+
+        describe "#metabase_enabled?" do
+          let(:enabled) { true }
+          let(:metabase_secrets) do
+            {
+              enabled: enabled
+            }
+          end
+
+          before do
+            allow(Rails.application.secrets).to receive(:metabase).and_return(metabase_secrets)
+          end
+
+          it "returns truthy" do
+            expect(controller.send(:metabase_enabled?)).to be_truthy
+          end
+
+          context "when metabase is disabled" do
+            let(:enabled) { false }
+
+            it "returns falsey" do
+              expect(controller.send(:metabase_enabled?)).to be_falsey
+            end
+          end
+
+          context "when metabase enable settings is not defined" do
+            let(:metabase_secrets) do
+              {}
+            end
+
+            it "returns falsey" do
+              expect(controller.send(:metabase_enabled?)).to be_falsey
+            end
+          end
+        end
       end
     end
   end

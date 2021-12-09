@@ -72,6 +72,16 @@ describe "Admin manages Metabase", type: :system do
           end
         end
       end
+
+      context "when metabase is disabled" do
+        let(:enabled) { false }
+
+        it "displays disabled module message" do
+          within ".card#metabase" do
+            expect(page).to have_content("Metabase module seems to be disabled")
+          end
+        end
+      end
     end
   end
 

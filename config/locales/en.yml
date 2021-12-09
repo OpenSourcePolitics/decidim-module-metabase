@@ -3,6 +3,7 @@ en:
   decidim:
     admin:
       metabase:
+        disabled: Metabase module seems to be disabled
         menu:
           title: Metabase
         title: Metabase dashboards
