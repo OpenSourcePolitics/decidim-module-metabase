@@ -1,0 +1,6 @@
+<% urls.each_with_index do |url, index| %>
+  <iframe src="<%= url %>" data-dashboard="<%= index %>"
+          width="100%"
+          height="<%= iframe_height %>>">
+  </iframe>
+<% end %>
