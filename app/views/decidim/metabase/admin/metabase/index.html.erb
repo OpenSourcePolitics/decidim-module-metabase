@@ -1,8 +1,11 @@
 <div class="card" id="metabase">
   <div class="card-divider">
     <h2 class="card-title">
-      <%= t "decidim.admin.metabase.title" %>
+      <%= t "decidim.admin.metabase.title.index" %>
     </h2>
+    <% if metabase_enabled? %>
+      <%= link_to t("decidim.admin.metabase.title.configuration"), edit_configuration_path, class: "button button-primary" %>
+    <% end %>
   </div>
   <div class="card-section">
     <% if metabase_enabled? %>

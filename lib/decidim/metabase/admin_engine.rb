@@ -10,12 +10,7 @@ module Decidim
       paths["lib/tasks"] = nil
 
       routes do
-        # Add admin engine routes here
-        # resources :metabase do
-        #   collection do
-        #     resources :exports, only: [:create]
-        #   end
-        # end
+        resource :configuration, only: [:edit, :update]
         root to: "metabase#index"
       end
 

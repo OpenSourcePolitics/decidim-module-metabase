@@ -4,21 +4,16 @@ module Decidim
   module Metabase
     module Admin
       class MetabaseController < Decidim::Metabase::Admin::ApplicationController
-        before_action :authorized?
         helper_method :urls, :metabase_enabled?
 
         private
 
-        def authorized?
-          enforce_permission_to :read, :metabase
-        end
-
         def urls
-          @urls ||= MetabaseService.urls
+          @urls ||= MetabaseService.urls_for(current_organization)
         end
 
         def metabase_enabled?
-          Rails.application.secrets.try(:metabase)&.fetch(:enabled, false)
+          Decidim::Metabase::MetabaseCredentials.metabase_enabled?
         end
       end
     end

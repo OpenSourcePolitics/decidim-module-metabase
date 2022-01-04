@@ -2,7 +2,7 @@
 
 require "spec_helper"
 
-describe "Admin manages Metabase", type: :system do
+describe "Admin manages configuration", type: :system do
   let(:organization) { create(:organization, metabase_configuration: metabase_configuration) }
 
   let(:enabled) { true }
@@ -24,7 +24,7 @@ describe "Admin manages Metabase", type: :system do
     allow(Decidim::Metabase::MetabaseApiWrapper).to receive(:collections).and_return(dashboard_ids)
   end
 
-  describe "with an adminstrator" do
+  describe "with an administrator" do
     let!(:admin) { create(:user, :admin, :confirmed, organization: organization) }
 
     before do
@@ -33,61 +33,27 @@ describe "Admin manages Metabase", type: :system do
       visit decidim_admin.root_path
     end
 
-    it "menu contains Metabase link" do
-      within "nav.main-nav" do
-        expect(page).to have_content("Metabase")
-        expect(page).to have_selector("a[href='/admin/metabase/']")
-      end
-    end
-
     context "when accessing metabase dashboard" do
       before do
         stub_request(:any, /fake.site.url/).to_return(body: "Not found", status: 404)
         find("a[href='/admin/metabase/']").click
+        click_link "Configuration"
       end
 
-      it "renders the index view" do
-        within ".card#metabase" do
-          expect(page).to have_content("Metabase dashboards")
-          expect(page).to have_selector("iframe[data-dashboard='0']")
-        end
-      end
+      it "renders the edit view" do
+        expect(page).to have_content("Configuration")
 
-      context "when there is multiple dashboards" do
-        let(:dashboard_ids) { [1, 2, 3] }
+        fill_in :organization_login, with: "login"
+        fill_in :organization_password, with: "password"
+        fill_in :organization_dashboard_ids, with: "1, 2, 3, 4"
+        find("*[type=submit]").click
 
-        it "renders the index view" do
-          within ".card#metabase" do
-            expect(page).to have_selector("iframe[data-dashboard='0']")
-            expect(page).to have_selector("iframe[data-dashboard='1']")
-            expect(page).to have_selector("iframe[data-dashboard='2']")
-          end
-        end
-      end
-
-      context "when there is no dashboards" do
-        let(:dashboard_ids) { [] }
-
-        it "display not found message" do
-          within ".card#metabase" do
-            expect(page).to have_content("No dashboard found")
-          end
-        end
-      end
-
-      context "when metabase is disabled" do
-        let(:enabled) { false }
-
-        it "displays disabled module message" do
-          within ".card#metabase" do
-            expect(page).to have_content("Metabase module seems to be disabled")
-          end
-        end
+        expect(page).to have_admin_callout("Success")
       end
     end
   end
 
-  describe "Unauthorized user manages dashboards" do
+  describe "Unauthorized user manages configuration" do
     context "when user is not logged in" do
       before do
         switch_to_host(organization.host)
@@ -109,7 +75,6 @@ describe "Admin manages Metabase", type: :system do
       end
 
       it "is redirected" do
-        expect(page).not_to have_content("Metabase#Index")
         expect(page).to have_content("You are not authorized to perform this action")
       end
     end
