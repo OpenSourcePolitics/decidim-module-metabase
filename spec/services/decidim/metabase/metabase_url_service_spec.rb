@@ -23,6 +23,20 @@ module Decidim
           expect(subject.url).to end_with("#bordered=true&titled=true")
         end
       end
+
+      describe ".run" do
+        before do
+          allow(Decidim::Metabase::MetabaseUrlService).to receive(:new).with(1).and_call_original
+        end
+
+        it "creates a new instance" do
+          url = Decidim::Metabase::MetabaseUrlService.run(1)
+
+          expect(Decidim::Metabase::MetabaseUrlService).to have_received(:new).with(1)
+          expect(url).to start_with("fake_site_url/embed/dashboard/")
+          expect(url).to end_with("#bordered=true&titled=true")
+        end
+      end
     end
   end
 end
