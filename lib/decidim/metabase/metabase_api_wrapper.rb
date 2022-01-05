@@ -7,13 +7,17 @@ class Decidim::Metabase::MetabaseApiWrapper
   def self.auth_token(credentials)
     auth_token = call("/api/session", credentials, :post)
 
-    JSON.parse(auth_token)["id"]
+    raise "auth_token request error with error code #{auth_token.code}" unless auth_token.code == "200"
+
+    JSON.parse(auth_token.read_body)["id"]
   end
 
   def self.collections(login, password)
     collections = call("/api/collection", nil, :get, { "X-Metabase-Session": metabase_auth_token(login, password) })
 
-    JSON.parse(collections).map { |collection| collection["id"] }
+    raise "collections request error with error code #{collections.code}" unless collections.code == "200"
+
+    JSON.parse(collections.read_body).map { |collection| collection["id"] }
   end
 
   def self.call(path, params, method, headers = nil)
@@ -32,8 +36,8 @@ class Decidim::Metabase::MetabaseApiWrapper
       request["Content-Type"] = "application/json"
       request.body = JSON.dump(params)
     end
-    response = https.request(request)
-    response.read_body
+
+    https.request(request)
   end
 
   def self.request_path(path)
