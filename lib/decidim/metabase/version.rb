@@ -3,6 +3,7 @@
 module Decidim
   # This holds the decidim-metabase version.
   module Metabase
+    # :nocov:
     def self.version
       "0.0.1"
     end
@@ -14,5 +15,7 @@ module Decidim
     def self.decidim_branch
       "release/0.25-stable"
     end
+
+    # :nocov:
   end
 end

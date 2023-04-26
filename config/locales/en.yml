@@ -6,5 +6,18 @@ en:
         disabled: Metabase module seems to be disabled
         menu:
           title: Metabase
-        title: Metabase dashboards
+        title:
+          index: Metabase dashboards
+          configuration: Configuration
         not_found: No dashboard found
+        success: "Success"
+        error: "Error"
+    metabase:
+      admin:
+        configurations:
+          edit:
+            help_text: Separate values by a comma as in '1, 2, 3, 4'
+            update: Update
+  only_allows_integer_separated_by_blank_space: "only allows integer separated by blank space"
+
+
